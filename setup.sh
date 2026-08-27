@@ -9,9 +9,10 @@ elif command -v sudo >/dev/null 2>&1; then SU=sudo
 else SU=""; fi
 
 echo ">> Installing GlassOS dependencies..."
+# Note: QtQuick Controls ships inside qt6-declarative on FreeBSD (no separate pkg).
 $SU pkg install -y \
     cmake ninja pkgconf \
-    qt6-base qt6-declarative qt6-quickcontrols2 qt6-5compat qt6-svg \
+    qt6-base qt6-declarative qt6-5compat qt6-svg \
     wayland wayland-protocols \
     labwc seatd foot
 

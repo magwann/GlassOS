@@ -15,10 +15,13 @@ in a virtualized VM (UTM on Apple Silicon).
 ```sh
 doas pkg install -y \
     cmake ninja pkgconf \
-    qt6-base qt6-declarative qt6-quickcontrols2 qt6-5compat qt6-svg \
+    qt6-base qt6-declarative qt6-5compat qt6-svg \
     wayland wayland-protocols \
     labwc seatd foot
 ```
+
+> On FreeBSD, QtQuick Controls ships inside `qt6-declarative` — there is no
+> separate `qt6-quickcontrols2` package (installing it aborts the whole command).
 
 - `qt6-5compat` provides `Qt5Compat.GraphicalEffects` (RadialGradient etc.)
 - `qt6-svg` lets the square tiles load the SVG glyphs

@@ -22,7 +22,7 @@ Open `index.html` in a browser. Click the orb, launch apps, drag windows.
 ```sh
 # one-time deps
 doas pkg install -y cmake ninja pkgconf qt6-base qt6-declarative \
-    qt6-quickcontrols2 qt6-5compat qt6-svg wayland labwc seatd foot
+    qt6-5compat qt6-svg wayland labwc seatd foot
 
 # build + run
 cd shell
