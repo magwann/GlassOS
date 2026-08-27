@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GlassOS</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ===== ABSTRACT FRUTIGER AERO BACKGROUND ===== -->
+<div class="wallpaper">
+  <div class="aurora a1"></div>
+  <div class="aurora a2"></div>
+  <div class="aurora a3"></div>
+  <div class="aurora a4"></div>
+  <div class="light-sweep"></div>
+  <div class="caustics"></div>
+  <!-- floating bokeh bubbles -->
+  <div class="bokeh-field" id="bokehField"></div>
+  <div class="vignette"></div>
+</div>
+
+<!-- ===== DESKTOP ICONS ===== -->
+<div class="desktop-icons">
+  <div class="desk-icon" data-app="files">
+    <div class="app-tile" data-glyph="files"></div>
+    <span>Files</span>
+  </div>
+  <div class="desk-icon" data-app="welcome">
+    <div class="app-tile" data-glyph="welcome"></div>
+    <span>Welcome</span>
+  </div>
+  <div class="desk-icon" data-app="settings">
+    <div class="app-tile" data-glyph="settings"></div>
+    <span>Settings</span>
+  </div>
+  <div class="desk-icon" data-app="browser">
+    <div class="app-tile" data-glyph="browser"></div>
+    <span>Aqua Web</span>
+  </div>
+</div>
+
+<!-- ===== WINDOWS LAYER ===== -->
+<div id="windows"></div>
+
+<!-- ===== START MENU ===== -->
+<div class="start-menu" id="startMenu">
+  <div class="start-search">
+    <span class="search-glyph"></span>
+    <input type="text" placeholder="Search GlassOS…" />
+  </div>
+  <div class="start-grid" id="startGrid"></div>
+  <div class="start-footer">
+    <div class="user-chip">
+      <div class="avatar"></div>
+      <span>jack</span>
+    </div>
+    <button class="power-btn" title="Power"></button>
+  </div>
+</div>
+
+<!-- ===== TASKBAR / DOCK ===== -->
+<div class="taskbar">
+  <button class="start-orb" id="startOrb" title="Start">
+    <span class="orb-mark"></span>
+  </button>
+  <div class="task-divider"></div>
+  <div class="task-apps" id="taskApps"></div>
+  <div class="task-spacer"></div>
+  <div class="tray">
+    <button class="tray-icon" data-glyph="wifi" title="Network"></button>
+    <button class="tray-icon" data-glyph="volume" title="Volume"></button>
+    <button class="tray-icon" data-glyph="battery" title="Battery"></button>
+    <div class="clock">
+      <span class="time" id="clockTime">--:--</span>
+      <span class="date" id="clockDate">—</span>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

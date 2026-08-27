@@ -1,0 +1,10 @@
+# build output
+shell/build/
+build/
+
+# editor / OS cruft
+.DS_Store
+*.swp
+*.user
+compile_commands.json
+.cache/

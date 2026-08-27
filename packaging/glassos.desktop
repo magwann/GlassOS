@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=GlassOS
+Comment=Frutiger Aero desktop for FreeBSD
+Exec=start-glassos.sh
+Type=Application
+DesktopNames=GlassOS

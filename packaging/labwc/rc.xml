@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!-- Minimal labwc config for GlassOS. Copy to ~/.config/labwc/rc.xml -->
+<labwc_config>
+  <theme>
+    <cornerRadius>12</cornerRadius>
+    <!-- Server-side decorations kept minimal; GlassOS provides the chrome. -->
+    <font place="ActiveWindow">
+      <name>Inter</name>
+      <size>10</size>
+    </font>
+  </theme>
+
+  <keyboard>
+    <keybind key="W-Return"><action name="Execute"><command>foot</command></action></keybind>
+    <keybind key="A-F4"><action name="Close"/></keybind>
+    <keybind key="W-d"><action name="ToggleShowDesktop"/></keybind>
+  </keyboard>
+
+  <mouse>
+    <!-- default labwc mouse behaviour -->
+  </mouse>
+</labwc_config>

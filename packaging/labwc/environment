@@ -1,0 +1,4 @@
+# labwc environment — copy to ~/.config/labwc/environment
+XDG_CURRENT_DESKTOP=GlassOS
+QT_QPA_PLATFORM=wayland
+QT_WAYLAND_DISABLE_WINDOWDECORATION=1
