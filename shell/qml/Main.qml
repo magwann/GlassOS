@@ -1,5 +1,6 @@
 import QtQuick
 import QtQuick.Window
+import GlassOS
 
 Window {
     id: win
@@ -44,7 +45,7 @@ Window {
                         text: parent.parent.name
                         color: Theme.inkInv
                         font.family: Theme.fontFamily
-                        font.pixelSize: 12.5
+                        font.pixelSize: 13
                         style: Text.Raised
                         styleColor: Qt.rgba(0,0.12,0.24,0.7)
                     }

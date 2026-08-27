@@ -1,5 +1,6 @@
 import QtQuick
 import QtQuick.Controls.Basic
+import GlassOS
 
 // The GlassOS launcher: search + app grid (square tiles) + user/power footer.
 GlassPanel {
@@ -89,7 +90,7 @@ GlassPanel {
                         text: parent.parent.name
                         color: Theme.inkInv
                         font.family: Theme.fontFamily
-                        font.pixelSize: 11.5
+                        font.pixelSize: 12
                         style: Text.Raised
                         styleColor: Qt.rgba(0,0.12,0.24,0.6)
                     }
@@ -120,7 +121,7 @@ GlassPanel {
                     text: "jack"
                     color: Theme.inkInv
                     font.family: Theme.fontFamily
-                    font.pixelSize: 13.5
+                    font.pixelSize: 14
                     font.bold: true
                 }
             }

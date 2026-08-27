@@ -1,4 +1,5 @@
 import QtQuick
+import GlassOS
 
 // Reusable translucent glass surface with a glossy top sheen + light border.
 // Content goes inside via default property (children are placed in `content`).

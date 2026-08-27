@@ -1,4 +1,5 @@
 import QtQuick
+import GlassOS
 
 // THE canonical app icon shape for all of GlassOS: a rounded square with a
 // glossy top highlight and a centered glyph. Nothing ever pokes outside it.

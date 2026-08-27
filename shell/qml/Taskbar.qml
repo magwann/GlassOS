@@ -1,4 +1,5 @@
 import QtQuick
+import GlassOS
 
 // Bottom glass dock: start orb + app tiles + tray + clock.
 GlassPanel {
