@@ -33,6 +33,7 @@ Item {
                 ListElement { xf: 0.08; yf: 0.72; sf: 0.48; col: "#5ad2ff"; dur: 12000 }
             }
             delegate: Item {
+                id: blob
                 required property real xf
                 required property real yf
                 required property real sf
@@ -47,7 +48,7 @@ Item {
                 RadialGradient {
                     anchors.fill: parent
                     gradient: Gradient {
-                        GradientStop { position: 0.0;  color: parent.col }
+                        GradientStop { position: 0.0;  color: blob.col }
                         GradientStop { position: 0.62; color: "transparent" }
                     }
                 }
@@ -77,12 +78,12 @@ Item {
         height: parent.height * 1.8
         y: -parent.height * 0.4
         rotation: 22
-        opacity: 0.14
+        opacity: 0.08
         gradient: Gradient {
             orientation: Gradient.Horizontal
-            GradientStop { position: 0.42; color: "transparent" }
+            GradientStop { position: 0.30; color: "transparent" }
             GradientStop { position: 0.50; color: "#ffffff" }
-            GradientStop { position: 0.58; color: "transparent" }
+            GradientStop { position: 0.70; color: "transparent" }
         }
         SequentialAnimation on x {
             loops: Animation.Infinite
@@ -93,7 +94,7 @@ Item {
 
     // ---- rising bokeh bubbles ----
     Repeater {
-        model: 16
+        model: 12
         delegate: Rectangle {
             required property int index
             property real sz: 22 + (index * 41) % 150
@@ -130,8 +131,8 @@ Item {
         horizontalRadius: parent.width * 0.75
         verticalRadius: parent.height * 0.8
         gradient: Gradient {
-            GradientStop { position: 0.55; color: "transparent" }
-            GradientStop { position: 1.0;  color: Qt.rgba(0.015, 0.09, 0.19, 0.38) }
+            GradientStop { position: 0.6;  color: "transparent" }
+            GradientStop { position: 1.0;  color: Qt.rgba(0.015, 0.09, 0.19, 0.28) }
         }
     }
 }
