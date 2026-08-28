@@ -19,6 +19,7 @@ set_source_files_properties(qml/Theme.qml qml/Apps.qml PROPERTIES
 qt_add_qml_module(glassos-shell
     URI GlassOS
     VERSION 1.0
+    RESOURCE_PREFIX "/qt/qml"    # same path on Qt 6.2 (Ubuntu) and 6.5+ (FreeBSD)
     QML_FILES
         qml/Main.qml
         qml/Wallpaper.qml
