@@ -33,9 +33,8 @@ int main(int argc, char *argv[]) {
     QQmlApplicationEngine engine;
     Launcher launcher;
     engine.rootContext()->setContextProperty("Launcher", &launcher);
-    QObject::connect(&engine, &QQmlApplicationEngine::objectCreationFailed,
-                     &app, []() { QCoreApplication::exit(-1); }, Qt::QueuedConnection);
-    engine.loadFromModule("GlassOS", "Main");
+    // Qt 6.2-compatible load (loadFromModule is 6.5+).
+    engine.load(QUrl(QStringLiteral("qrc:/qt/qml/GlassOS/qml/Main.qml")));
     if (engine.rootObjects().isEmpty()) return -1;
 
     // Headless capture mode: render one frame to PNG and exit.
