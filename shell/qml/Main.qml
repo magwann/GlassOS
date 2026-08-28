@@ -11,6 +11,7 @@ Window {
 
     // ---- wallpaper ----
     Wallpaper {
+        id: wallpaper
         anchors.fill: parent
     }
 
@@ -66,6 +67,7 @@ Window {
     // ---- start menu ----
     StartMenu {
         id: startMenu
+        backdrop: wallpaper
         x: 14
         width: 420
         height: Math.min(520, win.height * 0.62)
@@ -76,6 +78,7 @@ Window {
     // ---- taskbar ----
     Taskbar {
         id: taskbar
+        backdrop: wallpaper
         height: 62
         anchors.left: parent.left
         anchors.right: parent.right
