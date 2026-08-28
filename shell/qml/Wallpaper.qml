@@ -1,133 +1,137 @@
 import QtQuick
 import Qt5Compat.GraphicalEffects
 
-// Abstract Frutiger Aero wallpaper: deep sky base + drifting colour blobs,
-// a slow diagonal light sweep, and rising bokeh. All soft, so translucent
-// glass panels layered on top read as glass without per-panel blur.
+// Abstract Frutiger Aero wallpaper. All geometry binds to the live size so it
+// works at any resolution (the old version sized blobs once at startup when the
+// window was still 0x0, so they never appeared).
 Item {
     id: root
 
-    // base gradient (deep aqua sky)
+    // deep sky base gradient
     Rectangle {
         anchors.fill: parent
         gradient: Gradient {
-            GradientStop { position: 0.0; color: "#9fe6ff" }
-            GradientStop { position: 0.35; color: "#4bb6ef" }
-            GradientStop { position: 0.7;  color: "#1f7fc9" }
+            GradientStop { position: 0.0;  color: "#a6ecff" }
+            GradientStop { position: 0.40; color: "#4fb8f0" }
+            GradientStop { position: 0.75; color: "#1f7fc9" }
             GradientStop { position: 1.0;  color: "#0a4f8f" }
         }
     }
 
-    // ---- drifting colour blobs ----
-    Component {
-        id: blobComp
-        Item {
-            id: blob
-            property color tint: "white"
-            property real driftX: 60
-            property real driftY: 40
-            property int dur: 26000
-            RadialGradient {
-                anchors.fill: parent
-                gradient: Gradient {
-                    GradientStop { position: 0.0; color: blob.tint }
-                    GradientStop { position: 0.68; color: "transparent" }
+    // ---- drifting aurora blobs (soft, glowy) ----
+    Item {
+        id: blobs
+        anchors.fill: parent
+        opacity: 0.85
+
+        Repeater {
+            model: ListModel {
+                ListElement { xf: 0.14; yf: 0.16; sf: 0.60; col: "#7be495"; dur: 9000 }
+                ListElement { xf: 0.86; yf: 0.20; sf: 0.66; col: "#35e0c4"; dur: 11000 }
+                ListElement { xf: 0.46; yf: 0.86; sf: 0.70; col: "#bfeafe"; dur: 10000 }
+                ListElement { xf: 0.82; yf: 0.92; sf: 0.52; col: "#fff2c8"; dur: 13000 }
+                ListElement { xf: 0.08; yf: 0.72; sf: 0.48; col: "#5ad2ff"; dur: 12000 }
+            }
+            delegate: Item {
+                required property real xf
+                required property real yf
+                required property real sf
+                required property color col
+                required property int  dur
+                width: sf * root.width
+                height: width
+                x: xf * root.width - width / 2
+                y: yf * root.height - height / 2
+                transform: Translate { id: tr }
+
+                RadialGradient {
+                    anchors.fill: parent
+                    gradient: Gradient {
+                        GradientStop { position: 0.0;  color: parent.col }
+                        GradientStop { position: 0.62; color: "transparent" }
+                    }
+                }
+
+                SequentialAnimation {
+                    running: true; loops: Animation.Infinite
+                    NumberAnimation { target: tr; property: "x"; to:  root.width * 0.05;  duration: dur;     easing.type: Easing.InOutSine }
+                    NumberAnimation { target: tr; property: "x"; to: -root.width * 0.035; duration: dur;     easing.type: Easing.InOutSine }
+                    NumberAnimation { target: tr; property: "x"; to:  0;                  duration: dur;     easing.type: Easing.InOutSine }
+                }
+                SequentialAnimation {
+                    running: true; loops: Animation.Infinite
+                    NumberAnimation { target: tr; property: "y"; to:  root.height * 0.06; duration: dur * 1.3; easing.type: Easing.InOutSine }
+                    NumberAnimation { target: tr; property: "y"; to: -root.height * 0.04; duration: dur * 1.3; easing.type: Easing.InOutSine }
+                    NumberAnimation { target: tr; property: "y"; to:  0;                  duration: dur * 1.3; easing.type: Easing.InOutSine }
                 }
             }
-            SequentialAnimation on x {
-                loops: Animation.Infinite
-                NumberAnimation { from: blob.x; to: blob.x + blob.driftX; duration: blob.dur; easing.type: Easing.InOutSine }
-                NumberAnimation { from: blob.x + blob.driftX; to: blob.x; duration: blob.dur; easing.type: Easing.InOutSine }
-            }
-            SequentialAnimation on y {
-                loops: Animation.Infinite
-                NumberAnimation { from: blob.y; to: blob.y + blob.driftY; duration: blob.dur * 1.2; easing.type: Easing.InOutSine }
-                NumberAnimation { from: blob.y + blob.driftY; to: blob.y; duration: blob.dur * 1.2; easing.type: Easing.InOutSine }
-            }
         }
     }
-
-    Item {
-        id: blobLayer
-        anchors.fill: parent
-        opacity: 0.8
-
-        Component.onCompleted: {
-            const W = root.width, H = root.height;
-            blobComp.createObject(blobLayer, { x: -W*0.15, y: -H*0.2, width: W*0.7, height: W*0.7,
-                tint: Qt.rgba(0.48,0.89,0.58,0.85), driftX: W*0.06, driftY: H*0.05, dur: 26000 });
-            blobComp.createObject(blobLayer, { x: W*0.55, y: H*0.02, width: W*0.65, height: W*0.65,
-                tint: Qt.rgba(0.21,0.88,0.77,0.8), driftX: -W*0.05, driftY: H*0.06, dur: 32000 });
-            blobComp.createObject(blobLayer, { x: W*0.2, y: H*0.55, width: W*0.6, height: W*0.6,
-                tint: Qt.rgba(0.75,0.92,1.0,0.85), driftX: W*0.04, driftY: -H*0.05, dur: 30000 });
-            blobComp.createObject(blobLayer, { x: W*0.6, y: H*0.6, width: W*0.5, height: W*0.5,
-                tint: Qt.rgba(1.0,0.96,0.85,0.7), driftX: -W*0.04, driftY: -H*0.04, dur: 38000 });
-        }
-    }
+    // soften the whole aurora layer into a dreamy glow
+    layer.enabled: false
 
     // ---- diagonal light sweep ----
     Rectangle {
         id: sweep
         width: parent.width * 1.6
-        height: parent.height * 1.6
-        x: -parent.width * 0.3
-        y: -parent.height * 0.3
-        rotation: 25
-        opacity: 0.16
+        height: parent.height * 1.8
+        y: -parent.height * 0.4
+        rotation: 22
+        opacity: 0.14
         gradient: Gradient {
             orientation: Gradient.Horizontal
-            GradientStop { position: 0.4; color: "transparent" }
-            GradientStop { position: 0.5; color: Qt.rgba(1,1,1,0.9) }
-            GradientStop { position: 0.6; color: "transparent" }
+            GradientStop { position: 0.42; color: "transparent" }
+            GradientStop { position: 0.50; color: "#ffffff" }
+            GradientStop { position: 0.58; color: "transparent" }
         }
         SequentialAnimation on x {
             loops: Animation.Infinite
-            NumberAnimation { from: -parent.width * 0.6; to: parent.width * 0.3; duration: 14000; easing.type: Easing.Linear }
+            NumberAnimation { from: -parent.width * 0.7; to: parent.width * 0.4; duration: 15000; easing.type: Easing.InOutSine }
+            NumberAnimation { from: parent.width * 0.4; to: -parent.width * 0.7; duration: 15000; easing.type: Easing.InOutSine }
         }
     }
 
-    // ---- rising bokeh ----
+    // ---- rising bokeh bubbles ----
     Repeater {
-        model: 14
+        model: 16
         delegate: Rectangle {
             required property int index
-            property real sz: 24 + (index * 37) % 150
+            property real sz: 22 + (index * 41) % 150
             width: sz; height: sz
             radius: sz / 2
-            x: ((index * 53) % 100) / 100 * root.width
-            opacity: 0.5
-            // soft glassy bubble look
+            x: ((index * 61) % 100) / 100 * root.width
             color: "transparent"
             Rectangle {
                 anchors.fill: parent
                 radius: parent.radius
                 gradient: Gradient {
-                    GradientStop { position: 0.0; color: Qt.rgba(1,1,1,0.85) }
-                    GradientStop { position: 0.45; color: Qt.rgba(1,1,1,0.12) }
-                    GradientStop { position: 1.0; color: "transparent" }
+                    GradientStop { position: 0.0;  color: Qt.rgba(1,1,1,0.85) }
+                    GradientStop { position: 0.42; color: Qt.rgba(1,1,1,0.12) }
+                    GradientStop { position: 1.0;  color: "transparent" }
                 }
             }
+            opacity: 0.5
             SequentialAnimation on y {
                 loops: Animation.Infinite
-                PauseAnimation { duration: (index * 800) % 6000 }
+                PauseAnimation { duration: (index * 700) % 6000 }
                 NumberAnimation {
-                    from: root.height + parent.sz
-                    to: -parent.sz
-                    duration: 18000 + (index % 7) * 3000
+                    from: root.height + sz
+                    to: -sz
+                    duration: 17000 + (index % 7) * 3000
                     easing.type: Easing.Linear
                 }
             }
         }
     }
 
-    // vignette
+    // vignette for depth
     RadialGradient {
         anchors.fill: parent
         horizontalRadius: parent.width * 0.75
-        verticalRadius: parent.height * 0.75
+        verticalRadius: parent.height * 0.8
         gradient: Gradient {
             GradientStop { position: 0.55; color: "transparent" }
-            GradientStop { position: 1.0; color: Qt.rgba(0.015,0.09,0.19,0.35) }
+            GradientStop { position: 1.0;  color: Qt.rgba(0.015, 0.09, 0.19, 0.38) }
         }
     }
 }
