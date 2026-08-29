@@ -5,7 +5,12 @@ import GlassOS
 Window {
     id: win
     visible: true
-    visibility: Window.FullScreen
+    // Not FullScreen: under sway a fullscreen window covers launched apps.
+    // As a normal window the compositor tiles it to fill the screen, and real
+    // apps open as floating windows on top of it.
+    visibility: Window.Windowed
+    width: 1280
+    height: 800
     title: "GlassOS"
     color: "#0a4f8f"
 
