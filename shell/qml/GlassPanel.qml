@@ -1,9 +1,9 @@
 import QtQuick
 import GlassOS
 
-// Translucent glass surface: a see-through tint with a glossy top sheen and a
-// light border. (Real backdrop blur is disabled — it renders as black boxes on
-// virtio-GPU. The soft aurora wallpaper already reads as glass through the tint.)
+// Translucent glass surface with a glossy top sheen and a light border.
+// NOTE: no `clip` — stencil clipping renders as black boxes on the virgl/ANGLE
+// OpenGL-2.1 stack used by virtio-GPU. The gloss is rounded to fit instead.
 Item {
     id: root
     property real radius: Theme.rLg
@@ -18,22 +18,16 @@ Item {
         color: root.tint
         border.color: Theme.glassBorder
         border.width: 1
-        clip: true
 
-        // top gloss sheen
+        // top gloss sheen (rounded to match the panel instead of clipping)
         Rectangle {
-            anchors { left: parent.left; right: parent.right; top: parent.top }
+            anchors { left: parent.left; right: parent.right; top: parent.top; margins: 1 }
             height: parent.height * 0.5
+            radius: root.radius
             gradient: Gradient {
                 GradientStop { position: 0.0; color: Theme.glossTop }
                 GradientStop { position: 1.0; color: Theme.glossMid }
             }
-        }
-        // inner top highlight line
-        Rectangle {
-            anchors { left: parent.left; right: parent.right; top: parent.top; margins: 1 }
-            height: 1
-            color: Qt.rgba(1, 1, 1, 0.7)
         }
 
         Item {

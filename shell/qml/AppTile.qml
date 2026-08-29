@@ -3,6 +3,8 @@ import GlassOS
 
 // THE canonical app icon shape for all of GlassOS: a rounded square with a
 // glossy top highlight and a centered glyph. Nothing ever pokes outside it.
+// NOTE: no `clip` — stencil clipping renders black on virgl/GL-2.1; the gloss
+// is rounded to fit instead.
 Item {
     id: root
     property string glyph: "files"
@@ -16,11 +18,9 @@ Item {
     Rectangle {
         id: tile
         anchors.fill: parent
-        radius: size * 0.27          // consistent squircle-ish radius
+        radius: size * 0.27
         border.color: Theme.glassBorderLo
         border.width: 1
-        clip: true
-
         gradient: Gradient {
             GradientStop { position: 0.0; color: Theme.tileGradient(root.tint)[0] }
             GradientStop { position: 1.0; color: Theme.tileGradient(root.tint)[1] }
@@ -28,11 +28,12 @@ Item {
 
         // glossy top half
         Rectangle {
-            anchors { left: parent.left; right: parent.right; top: parent.top }
+            anchors { left: parent.left; right: parent.right; top: parent.top; margins: 1 }
             height: parent.height * 0.5
+            radius: parent.radius
             gradient: Gradient {
-                GradientStop { position: 0.0; color: Qt.rgba(1,1,1,0.6) }
-                GradientStop { position: 1.0; color: Qt.rgba(1,1,1,0.05) }
+                GradientStop { position: 0.0; color: Qt.rgba(1, 1, 1, 0.6) }
+                GradientStop { position: 1.0; color: Qt.rgba(1, 1, 1, 0.05) }
             }
         }
 
@@ -48,7 +49,6 @@ Item {
         }
     }
 
-    // press feedback
     scale: tapArea.pressed ? 0.93 : 1.0
     Behavior on scale { NumberAnimation { duration: 90; easing.type: Easing.OutQuad } }
 

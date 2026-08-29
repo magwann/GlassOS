@@ -61,7 +61,7 @@ GlassPanel {
             height: parent.height - 44 - 48 - 28
             cellWidth: width / 4
             cellHeight: 96
-            clip: true
+            clip: false   // stencil clip renders black on virgl/GL-2.1
             model: Apps
             delegate: Item {
                 required property string appId

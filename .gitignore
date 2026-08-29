@@ -8,3 +8,8 @@ build/
 *.user
 compile_commands.json
 .cache/
+
+# local screenshots
+vm-screenshot.png
+ubuntu-*.png
+live*.png
