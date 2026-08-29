@@ -1,0 +1,5 @@
+#!/bin/sh
+# GlassOS session launcher for Ubuntu. Install to /usr/local/bin/glassos-session
+export QT_QPA_PLATFORM=wayland
+export WLR_NO_HARDWARE_CURSORS=1
+exec sway -c /etc/glassos/sway.conf
