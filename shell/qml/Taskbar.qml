@@ -27,26 +27,29 @@ GlassPanel {
                 radius: width / 2
                 border.color: Qt.rgba(1,1,1,0.6)
                 border.width: 1
+                // glossy light base so the green sprout reads as "wet"
                 gradient: Gradient {
-                    GradientStop { position: 0.0; color: Theme.teal }
-                    GradientStop { position: 1.0; color: Theme.aquaDeep }
+                    GradientStop { position: 0.0; color: "#f2fffb" }
+                    GradientStop { position: 0.55; color: "#c8f7e4" }
+                    GradientStop { position: 1.0; color: "#6fdcc0" }
                 }
                 scale: orbTap.pressed ? 0.93 : 1.0
                 Behavior on scale { NumberAnimation { duration: 100 } }
 
-                // specular highlight
+                // specular highlight (wet shine)
                 Rectangle {
-                    x: parent.width * 0.24; y: parent.height * 0.16
-                    width: parent.width * 0.4; height: parent.height * 0.3
+                    x: parent.width * 0.22; y: parent.height * 0.13
+                    width: parent.width * 0.46; height: parent.height * 0.32
                     radius: height / 2
-                    color: Qt.rgba(1,1,1,0.8)
-                    opacity: 0.7
+                    color: Qt.rgba(1,1,1,0.9)
+                    opacity: 0.75
                 }
                 Image {
                     anchors.centerIn: parent
-                    width: 20; height: 20
-                    source: "glyphs/grid.svg"
-                    sourceSize.width: 40; sourceSize.height: 40
+                    width: 26; height: 26
+                    source: "glyphs/sprout.svg"
+                    sourceSize.width: 52; sourceSize.height: 52
+                    smooth: true
                 }
                 // active ring
                 Rectangle {

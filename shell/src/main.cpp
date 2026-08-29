@@ -78,13 +78,13 @@ public:
         m = {
             {"welcome",  "Welcome",    "welcome",  "aqua",   ""},
             {"files",    "Files",      "files",    "teal",   "pcmanfm-qt"},
-            {"browser",  "Aqua Web",   "browser",  "aqua",   "firefox"},
-            {"terminal", "Terminal",   "terminal", "leaf",   "foot || xterm"},
-            {"settings", "Settings",   "settings", "violet", ""},
-            {"mail",     "Mail",       "mail",     "teal",   "thunderbird"},
+            {"browser",  "Aqua Web",   "browser",  "aqua",   "epiphany-browser"},
+            {"terminal", "Terminal",   "terminal", "leaf",   "foot"},
+            {"settings", "Settings",   "settings", "violet", "gnome-control-center"},
+            {"mail",     "Mail",       "mail",     "teal",   ""},
             {"music",    "Music",      "music",    "violet", ""},
-            {"photos",   "Photos",     "photos",   "warm",   ""},
-            {"calc",     "Calculator", "calc",     "aqua",   ""},
+            {"photos",   "Photos",     "photos",   "warm",   "eog"},
+            {"calc",     "Calculator", "calc",     "aqua",   "gnome-calculator"},
         };
     }
     int rowCount(const QModelIndex & = QModelIndex()) const override { return int(m.size()); }

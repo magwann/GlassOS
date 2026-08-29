@@ -38,6 +38,7 @@ qt_add_qml_module(glassos-shell
         qml/glyphs/power.svg
         qml/glyphs/search.svg
         qml/glyphs/grid.svg
+        qml/glyphs/sprout.svg
 )
 
 target_link_libraries(glassos-shell PRIVATE
