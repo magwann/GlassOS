@@ -19,7 +19,7 @@ QtObject {
     // ---- glass recipe ----
     readonly property color glassTint:  Qt.rgba(1, 1, 1, 0.14)
     readonly property color glassSoft:  Qt.rgba(1, 1, 1, 0.08)
-    readonly property color glassDeep:  Qt.rgba(0.055, 0.18, 0.29, 0.30)
+    readonly property color glassDeep:  Qt.rgba(0.10, 0.28, 0.42, 0.30)
     readonly property color glassBorder:    Qt.rgba(1, 1, 1, 0.55)
     readonly property color glassBorderLo:  Qt.rgba(1, 1, 1, 0.22)
 
