@@ -20,10 +20,20 @@ Window {
         anchors.fill: parent
     }
 
+    // click anywhere on the desktop closes the start menu
+    MouseArea {
+        anchors.fill: parent
+        z: -1
+        onClicked: startMenu.shown = false
+        acceptedButtons: Qt.LeftButton
+        propagateComposedEvents: true
+    }
+
     // ---- desktop icons (top-left column) ----
     Column {
         x: 26; y: 26
         spacing: 22
+        z: 1
         Repeater {
             model: Apps
             delegate: Item {
@@ -38,13 +48,18 @@ Window {
 
                 Column {
                     anchors.horizontalCenter: parent.horizontalCenter
-                    spacing: 8
+                    spacing: 6
                     AppTile {
                         anchors.horizontalCenter: parent.horizontalCenter
                         size: 58
                         glyph: parent.parent.glyph
                         tint: parent.parent.tint
-                        onActivated: if (parent.parent.exec !== "") Launcher.launch(parent.parent.exec)
+                        onActivated: wm.open(parent.parent.appId, parent.parent.name, parent.parent.glyph, parent.parent.tint)
+                    }
+                    RunDot {
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        opening: wm.isOpening(parent.parent.appId)
+                        active: wm.isOpen(parent.parent.appId)
                     }
                     Text {
                         anchors.horizontalCenter: parent.horizontalCenter
@@ -60,18 +75,20 @@ Window {
         }
     }
 
-    // click anywhere on the desktop closes the start menu
-    MouseArea {
+    // ---- app windows layer (custom in-shell apps) ----
+    // Kept below the dock/start menu (lower z) so those chrome elements always
+    // stay on top of every open window.
+    WindowManager {
+        id: wm
         anchors.fill: parent
-        z: -1
-        onClicked: startMenu.shown = false
-        acceptedButtons: Qt.LeftButton
-        propagateComposedEvents: true
+        z: 50
     }
 
-    // ---- start menu ----
+    // ---- start menu (always on top of windows) ----
     StartMenu {
         id: startMenu
+        z: 1000
+        wm: wm
         backdrop: wallpaper
         x: 14
         width: 420
@@ -80,9 +97,11 @@ Window {
         onAppLaunched: shown = false
     }
 
-    // ---- taskbar ----
+    // ---- taskbar / dock (always on top of windows) ----
     Taskbar {
         id: taskbar
+        z: 1000
+        wm: wm
         backdrop: wallpaper
         height: 62
         anchors.left: parent.left

@@ -22,6 +22,19 @@ qt_add_qml_module(glassos-shell
         qml/AppTile.qml
         qml/Taskbar.qml
         qml/StartMenu.qml
+        qml/WindowManager.qml
+        qml/AppWindow.qml
+        qml/WinDot.qml
+        qml/RunDot.qml
+        qml/apps/Welcome.qml
+        qml/apps/Files.qml
+        qml/apps/Settings.qml
+        qml/apps/Browser.qml
+        qml/apps/Mail.qml
+        qml/apps/Music.qml
+        qml/apps/Photos.qml
+        qml/apps/Terminal.qml
+        qml/apps/Calculator.qml
     RESOURCES
         qml/glyphs/files.svg
         qml/glyphs/welcome.svg

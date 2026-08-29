@@ -9,6 +9,7 @@ GlassPanel {
     tint: Theme.glassDeep
 
     property bool shown: false
+    property var wm: null
     signal appLaunched()
 
     visible: opacity > 0.01
@@ -81,7 +82,7 @@ GlassPanel {
                         glyph: parent.parent.glyph
                         tint: parent.parent.tint
                         onActivated: {
-                            if (parent.parent.exec !== "") Launcher.launch(parent.parent.exec)
+                            root.wm.open(parent.parent.appId, parent.parent.name, parent.parent.glyph, parent.parent.tint)
                             root.appLaunched()
                         }
                     }

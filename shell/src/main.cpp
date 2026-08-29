@@ -127,6 +127,17 @@ public:
         if (command.trimmed().isEmpty()) return;
         QProcess::startDetached(QStringLiteral("/bin/sh"), {QStringLiteral("-c"), command});
     }
+    // Run a command and return its combined output — powers the built-in Terminal.
+    // Synchronous but time-boxed so a stray command can never wedge the shell.
+    Q_INVOKABLE QString run(const QString &command) {
+        if (command.trimmed().isEmpty()) return QString();
+        QProcess p;
+        p.start(QStringLiteral("/bin/sh"), {QStringLiteral("-c"), command});
+        if (!p.waitForFinished(5000)) { p.kill(); return QStringLiteral("[glassos: command timed out]\n"); }
+        const QString out = QString::fromLocal8Bit(p.readAllStandardOutput());
+        const QString err = QString::fromLocal8Bit(p.readAllStandardError());
+        return out + err;
+    }
     // Swap the GTK theme + libadwaita color-scheme for launched apps.
     Q_INVOKABLE void setGtkDark(bool d) {
         const QString v = d ? "dark" : "light";

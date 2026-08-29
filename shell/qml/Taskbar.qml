@@ -9,6 +9,7 @@ GlassPanel {
 
     signal startToggled()
     property bool startActive: false
+    property var wm: null
 
     Row {
         anchors.fill: parent
@@ -102,11 +103,21 @@ GlassPanel {
                         Behavior on color { ColorAnimation { duration: 120 } }
                     }
                     AppTile {
-                        anchors.centerIn: parent
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        anchors.top: parent.top
+                        anchors.topMargin: 1
                         size: 40
                         glyph: parent.glyph
                         tint: parent.tint
-                        onActivated: if (parent.exec !== "") Launcher.launch(parent.exec)
+                        onActivated: root.wm.open(parent.appId, parent.name, parent.glyph, parent.tint)
+                    }
+                    // launch / running indicator
+                    RunDot {
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        anchors.bottom: parent.bottom
+                        anchors.bottomMargin: -1
+                        opening: root.wm && root.wm.isOpening(parent.appId)
+                        active: root.wm && root.wm.isOpen(parent.appId)
                     }
                     HoverHandler { id: hover }
                 }
