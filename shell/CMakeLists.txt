@@ -11,11 +11,6 @@ qt_add_executable(glassos-shell
     src/main.cpp
 )
 
-# Mark QML singletons BEFORE registering the module (order matters).
-set_source_files_properties(qml/Theme.qml qml/Apps.qml PROPERTIES
-    QT_QML_SINGLETON_TYPE TRUE
-)
-
 qt_add_qml_module(glassos-shell
     URI GlassOS
     VERSION 1.0
@@ -27,8 +22,6 @@ qt_add_qml_module(glassos-shell
         qml/AppTile.qml
         qml/Taskbar.qml
         qml/StartMenu.qml
-        qml/Theme.qml
-        qml/Apps.qml
     RESOURCES
         qml/glyphs/files.svg
         qml/glyphs/welcome.svg
