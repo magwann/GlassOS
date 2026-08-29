@@ -1,0 +1,47 @@
+/* ===== GlassOS GTK theme — dark (night glass) =====
+   Same shiny circle controls, dark glassy chrome. */
+
+decoration {
+  border-radius: 14px;
+  box-shadow: 0 14px 40px rgba(0, 6, 14, 0.55), 0 0 0 1px rgba(255,255,255,0.06);
+}
+decoration:backdrop { box-shadow: 0 8px 22px rgba(0, 6, 14, 0.4); }
+
+headerbar,
+.titlebar,
+headerbar.default-decoration {
+  border-radius: 14px 14px 0 0;
+  background-image: linear-gradient(180deg, #1b3a55, #12283c);
+  color: #e6f2ff;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.10);
+  min-height: 42px;
+}
+headerbar .title, headerbar label { color: #e6f2ff; }
+
+window, .background { background-color: #0e2233; color: #dbeafc; }
+
+button.titlebutton,
+windowcontrols > button {
+  min-width: 16px; min-height: 16px;
+  padding: 0; margin: 0 4px;
+  border-radius: 50%;
+  border: 1px solid rgba(0,0,0,0.35);
+  box-shadow: inset 0 1px 1.5px rgba(255,255,255,0.7), 0 1px 2px rgba(0,0,0,0.45);
+  -gtk-icon-shadow: none;
+  color: transparent;
+  outline: none;
+}
+button.titlebutton image,
+windowcontrols > button image { -gtk-icon-transform: scale(0); opacity: 0; }
+button.titlebutton:hover, windowcontrols > button:hover { filter: brightness(1.12); }
+
+button.titlebutton.minimize, windowcontrols > button.minimize {
+  background-image: radial-gradient(circle at 34% 28%, #fff1bd 0%, #ffd666 40%, #f5b012 100%);
+}
+button.titlebutton.maximize, windowcontrols > button.maximize {
+  background-image: radial-gradient(circle at 34% 28%, #cdf7c5 0%, #6fe06f 42%, #23b53a 100%);
+}
+button.titlebutton.close, windowcontrols > button.close {
+  background-image: radial-gradient(circle at 34% 28%, #ffc0ba 0%, #ff7b73 40%, #e8443c 100%);
+}

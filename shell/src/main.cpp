@@ -77,9 +77,9 @@ public:
     explicit AppsModel(QObject *p = nullptr) : QAbstractListModel(p) {
         m = {
             {"welcome",  "Welcome",    "welcome",  "aqua",   ""},
-            {"files",    "Files",      "files",    "teal",   "pcmanfm-qt"},
+            {"files",    "Files",      "files",    "teal",   "nautilus --new-window"},
             {"browser",  "Aqua Web",   "browser",  "aqua",   "epiphany-browser"},
-            {"terminal", "Terminal",   "terminal", "leaf",   "foot"},
+            {"terminal", "Terminal",   "terminal", "leaf",   "gnome-terminal"},
             {"settings", "Settings",   "settings", "violet", "gnome-control-center"},
             {"mail",     "Mail",       "mail",     "teal",   ""},
             {"music",    "Music",      "music",    "violet", ""},
