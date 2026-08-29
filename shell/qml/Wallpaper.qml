@@ -7,14 +7,14 @@ import Qt5Compat.GraphicalEffects
 Item {
     id: root
 
-    // deep sky base gradient
+    // deep sky base gradient (darkens to "night glass" in dark mode)
     Rectangle {
         anchors.fill: parent
         gradient: Gradient {
-            GradientStop { position: 0.0;  color: "#a6ecff" }
-            GradientStop { position: 0.40; color: "#4fb8f0" }
-            GradientStop { position: 0.75; color: "#1f7fc9" }
-            GradientStop { position: 1.0;  color: "#0a4f8f" }
+            GradientStop { position: 0.0;  color: Theme.wallTop }
+            GradientStop { position: 0.40; color: Theme.wallMid1 }
+            GradientStop { position: 0.75; color: Theme.wallMid2 }
+            GradientStop { position: 1.0;  color: Theme.wallBottom }
         }
     }
 
@@ -22,7 +22,7 @@ Item {
     Item {
         id: blobs
         anchors.fill: parent
-        opacity: 0.85
+        opacity: Theme.blobOpacity
 
         Repeater {
             model: ListModel {

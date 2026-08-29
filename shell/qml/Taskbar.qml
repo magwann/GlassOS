@@ -121,6 +121,24 @@ GlassPanel {
         anchors.verticalCenter: parent.verticalCenter
         spacing: 6
 
+        // dark-mode toggle (night glass)
+        Rectangle {
+            width: 34; height: 34; radius: 10
+            color: darkHover.hovered ? Qt.rgba(1,1,1,0.24) : Qt.rgba(1,1,1,0.10)
+            Behavior on color { ColorAnimation { duration: 120 } }
+            Image {
+                anchors.centerIn: parent
+                width: 18; height: 18
+                source: Theme.dark ? "glyphs/sun.svg" : "glyphs/moon.svg"
+                sourceSize.width: 36; sourceSize.height: 36
+            }
+            HoverHandler { id: darkHover }
+            MouseArea {
+                anchors.fill: parent
+                onClicked: { Theme.dark = !Theme.dark; Launcher.setGtkDark(Theme.dark) }
+            }
+        }
+
         Repeater {
             model: ["wifi", "volume", "battery"]
             delegate: Rectangle {
