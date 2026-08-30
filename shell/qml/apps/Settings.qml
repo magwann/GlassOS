@@ -43,7 +43,7 @@ Item {
             anchors.verticalCenter: parent.verticalCenter
             spacing: 2
             Text { text: label; color: Theme.ink; font.family: Theme.fontFamily; font.pixelSize: 14 }
-            Text { visible: sub.length>0; text: sub; color: Theme.inkSoft; font.family: Theme.fontFamily; font.pixelSize: 11.5 }
+            Text { visible: sub.length>0; text: sub; color: Theme.inkSoft; font.family: Theme.fontFamily; font.pixelSize: 12 }
         }
         Item { id: slot; anchors.right: parent.right; anchors.rightMargin: 10; anchors.verticalCenter: parent.verticalCenter; width: 220; height: parent.height
                // right-align the single control placed inside
@@ -178,7 +178,7 @@ Item {
                                 Rectangle { width:20; height:20; radius:6; color: modelData.tint; anchors.verticalCenter: parent.verticalCenter
                                     border.color: Qt.rgba(1,1,1,0.5); border.width:1 }
                                 Text { anchors.verticalCenter: parent.verticalCenter; text: modelData.name
-                                    color: Theme.ink; font.family: Theme.fontFamily; font.pixelSize: 13.5 }
+                                    color: Theme.ink; font.family: Theme.fontFamily; font.pixelSize: 14 }
                             }
                             HoverHandler { id: sHover }
                             MouseArea { anchors.fill: parent; onClicked: root.current = modelData.key }
@@ -426,7 +426,7 @@ Item {
             }
         }
         Card { title:"System"
-            Row_ { label:"OS"; Text{text:ap.osName; color:Theme.inkSoft; font.pixelSize:12.5} }
+            Row_ { label:"OS"; Text{text:ap.osName; color:Theme.inkSoft; font.pixelSize:13} }
             Row_ { label:"Kernel"; Text{text:ap.kernel; color:Theme.inkSoft; font.pixelSize:13} }
             Row_ { label:"Hostname"; Text{text:ap.host; color:Theme.inkSoft; font.pixelSize:13} }
             Row_ { label:"Processor"; Text{text:ap.cpu; color:Theme.inkSoft; font.pixelSize:13} }
