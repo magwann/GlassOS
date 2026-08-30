@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Controls.Basic
 import GlassOS
+import "../"   // shell-level components (AppTile) live one directory up
 
 // GlassOS App Store — a glassy catalog. "Installed" apps are the in-shell GlassOS
 // apps and open right here via the window manager; "discover" apps show the
