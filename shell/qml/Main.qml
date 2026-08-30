@@ -15,8 +15,19 @@ Window {
     color: "#0a4f8f"
 
     // dev hook: GLASSOS_OPEN=<appId> auto-opens one window for headless testing
-    Component.onCompleted: if (typeof StartupApp !== "undefined" && StartupApp.length)
-        wm.open(StartupApp, StartupApp.charAt(0).toUpperCase() + StartupApp.slice(1), StartupApp, "aqua")
+    Component.onCompleted: {
+        if (typeof StartupApp !== "undefined" && StartupApp.length) {
+            wm.open(StartupApp, StartupApp.charAt(0).toUpperCase() + StartupApp.slice(1), StartupApp, "aqua")
+            // GLASSOS_SELFTEST=minrestore: minimize then reopen, to verify a
+            // minimized window restores (exercises WindowManager.activate()).
+            if (typeof SelfTest !== "undefined" && SelfTest === "minrestore") {
+                selftestMin.start(); selftestRestore.start()
+            }
+        }
+    }
+    Timer { id: selftestMin;     interval: 1500; onTriggered: wm.minimize(StartupApp) }
+    Timer { id: selftestRestore; interval: 2900
+        onTriggered: wm.open(StartupApp, StartupApp.charAt(0).toUpperCase() + StartupApp.slice(1), StartupApp, "aqua") }
 
     // ---- wallpaper ----
     Wallpaper {

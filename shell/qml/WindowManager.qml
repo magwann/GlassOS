@@ -55,6 +55,11 @@ Item {
         win.z = ++wm._ztop
     }
 
+    function minimize(appId) {
+        var win = _wins[appId]
+        if (win) win.minimized = true
+    }
+
     Component {
         id: winComp
         AppWindow {}

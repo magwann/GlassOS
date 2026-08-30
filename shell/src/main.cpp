@@ -173,6 +173,8 @@ int main(int argc, char *argv[]) {
     engine.rootContext()->setContextProperty("Apps", &apps);
     engine.rootContext()->setContextProperty("Launcher", &launcher);
     engine.rootContext()->setContextProperty("StartupApp", QString::fromLocal8Bit(qgetenv("GLASSOS_OPEN")));
+    // dev hook: GLASSOS_SELFTEST=minrestore drives minimize+reopen for headless testing
+    engine.rootContext()->setContextProperty("SelfTest", QString::fromLocal8Bit(qgetenv("GLASSOS_SELFTEST")));
 
     engine.load(QUrl(QStringLiteral("qrc:/qt/qml/GlassOS/qml/Main.qml")));
     if (engine.rootObjects().isEmpty()) return -1;
