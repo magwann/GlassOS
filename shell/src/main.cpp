@@ -165,6 +165,7 @@ int main(int argc, char *argv[]) {
     engine.rootContext()->setContextProperty("Theme", &theme);
     engine.rootContext()->setContextProperty("Apps", &apps);
     engine.rootContext()->setContextProperty("Launcher", &launcher);
+    engine.rootContext()->setContextProperty("StartupApp", QString::fromLocal8Bit(qgetenv("GLASSOS_OPEN")));
 
     engine.load(QUrl(QStringLiteral("qrc:/qt/qml/GlassOS/qml/Main.qml")));
     if (engine.rootObjects().isEmpty()) return -1;

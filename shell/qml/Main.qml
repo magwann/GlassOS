@@ -14,6 +14,10 @@ Window {
     title: "GlassOS"
     color: "#0a4f8f"
 
+    // dev hook: GLASSOS_OPEN=<appId> auto-opens one window for headless testing
+    Component.onCompleted: if (typeof StartupApp !== "undefined" && StartupApp.length)
+        wm.open(StartupApp, StartupApp.charAt(0).toUpperCase() + StartupApp.slice(1), StartupApp, "aqua")
+
     // ---- wallpaper ----
     Wallpaper {
         id: wallpaper
