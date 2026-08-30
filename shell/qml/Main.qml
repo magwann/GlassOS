@@ -23,11 +23,17 @@ Window {
             if (typeof SelfTest !== "undefined" && SelfTest === "minrestore") {
                 selftestMin.start(); selftestRestore.start()
             }
+            if (typeof SelfTest !== "undefined" && SelfTest === "resize")
+                selftestResize.start()
         }
     }
     Timer { id: selftestMin;     interval: 1500; onTriggered: wm.minimize(StartupApp) }
     Timer { id: selftestRestore; interval: 2900
         onTriggered: wm.open(StartupApp, StartupApp.charAt(0).toUpperCase() + StartupApp.slice(1), StartupApp, "aqua") }
+    // apply the same width/height change the resize grips drive, to verify the
+    // window resizes and re-renders (headless sway has no pointer to drag with)
+    Timer { id: selftestResize; interval: 1400
+        onTriggered: { var w = wm._wins[StartupApp]; if (w) { w.width = 1040; w.height = 660 } } }
 
     // ---- wallpaper ----
     Wallpaper {
