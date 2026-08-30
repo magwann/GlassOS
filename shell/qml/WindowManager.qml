@@ -25,10 +25,10 @@ Item {
     function _rmOpen(id)     { openIds = openIds.filter(function (x) { return x !== id }) }
 
     function open(appId, name, glyph, tint) {
-        if (_wins[appId]) { focus(appId); return }
+        if (_wins[appId]) { activate(appId); return }
         var n = Object.keys(_wins).length
         var win = winComp.createObject(wm, {
-            appId: appId, title: name, glyph: glyph, tint: tint,
+            appId: appId, title: name, glyph: glyph, tint: tint, manager: wm,
             x: Math.max(40, wm.width / 2 - 310 + (n * 30) % 170),
             y: Math.max(28, wm.height / 2 - 250 + (n * 26) % 130),
             z: ++wm._ztop
@@ -41,11 +41,14 @@ Item {
             wm._rmOpening(appId); wm._rmOpen(appId)
             delete wm._wins[appId]; win.destroy()
         })
-        win.focusRequested.connect(function () { wm.focus(appId) })
+        win.focusRequested.connect(function () { wm.activate(appId) })
         appOpened()
     }
 
-    function focus(appId) {
+    // NOTE: must NOT be named `focus` — that collides with QQuickItem's final
+    // `focus` property, so the override is silently dropped and minimized
+    // windows never restore (apps "won't reopen after being minimized").
+    function activate(appId) {
         var win = _wins[appId]
         if (!win) return
         win.minimized = false

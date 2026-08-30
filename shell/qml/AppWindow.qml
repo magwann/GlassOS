@@ -15,6 +15,10 @@ Item {
     property bool minimized: false
     property bool maximized: false
     property rect _restore: Qt.rect(0, 0, 0, 0)
+    property var manager: null          // the WindowManager — apps use it to open other apps
+
+    property int minW: 380
+    property int minH: 260
 
     signal readied()          // window finished "opening"
     signal closed()
@@ -40,7 +44,8 @@ Item {
     function compFor(id) {
         var map = {
             welcome: "Welcome", files: "Files", browser: "Browser", terminal: "Terminal",
-            settings: "Settings", mail: "Mail", music: "Music", photos: "Photos", calc: "Calculator"
+            settings: "Settings", mail: "Mail", music: "Music", photos: "Photos", calc: "Calculator",
+            appstore: "AppStore"
         }
         return map[id] || "Welcome"
     }
@@ -131,6 +136,8 @@ Item {
             source: awin.loading ? "" : ("apps/" + awin.compFor(awin.appId) + ".qml")
             opacity: awin.loading ? 0 : 1
             Behavior on opacity { NumberAnimation { duration: 200 } }
+            // hand the loaded app a reference to the window manager if it wants one
+            onLoaded: if (item && item.manager !== undefined) item.manager = awin.manager
         }
 
         // ---- loading shimmer ----
@@ -159,6 +166,53 @@ Item {
                     from: 0; to: 360; duration: 900
                 }
             }
+        }
+
+        // ---- resize grips ----
+        // Drag from an edge or the bottom-right corner to resize. Deltas are read
+        // from the pointer's *scene* position so the grip moving with the window
+        // as it grows never feeds back into the size.
+        component Grip: Item {
+            property bool horiz: false
+            property bool vert: false
+            property real _w0: 0
+            property real _h0: 0
+            visible: !awin.maximized
+            DragHandler {
+                target: null
+                dragThreshold: 0
+                onActiveChanged: if (active) { _w0 = awin.width; _h0 = awin.height; awin.focusRequested() }
+                onActiveTranslationChanged: if (active) {
+                    if (horiz) {
+                        var nw = _w0 + (centroid.scenePosition.x - centroid.scenePressPosition.x)
+                        var maxW = awin.parent ? awin.parent.width - awin.x - 6 : 4000
+                        awin.width = Math.max(awin.minW, Math.min(maxW, nw))
+                    }
+                    if (vert) {
+                        var nh = _h0 + (centroid.scenePosition.y - centroid.scenePressPosition.y)
+                        var maxH = awin.parent ? awin.parent.height - awin.y - 6 : 4000
+                        awin.height = Math.max(awin.minH, Math.min(maxH, nh))
+                    }
+                }
+            }
+        }
+
+        Grip {   // right edge
+            horiz: true
+            width: 8
+            anchors { right: parent.right; top: parent.top; bottom: parent.bottom
+                      topMargin: 44; bottomMargin: 16 }
+        }
+        Grip {   // bottom edge
+            vert: true
+            height: 8
+            anchors { left: parent.left; right: parent.right; bottom: parent.bottom
+                      leftMargin: 16; rightMargin: 16 }
+        }
+        Grip {   // bottom-right corner
+            horiz: true; vert: true
+            width: 18; height: 18
+            anchors { right: parent.right; bottom: parent.bottom }
         }
     }
 }

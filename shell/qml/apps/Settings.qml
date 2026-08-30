@@ -8,6 +8,11 @@ Item {
     id: root
     property string current: "appearance"
 
+    // Sidebar has 17 fixed categories and we can't clip (stencil clip renders
+    // black on virgl), so size each row to fit the window height — otherwise the
+    // list spills out past the bottom of the window.
+    property real sideRowH: Math.max(20, Math.min(40, (height - 16) / cats.length))
+
     // ---------- reusable glass controls (inline components) ----------
     component Card: Rectangle {
         default property alias data_: col.data
@@ -159,30 +164,28 @@ Item {
         Rectangle {
             width: 190; height: parent.height
             color: Qt.rgba(1,1,1,0.10)
-            Flickable {
+            Column {
                 anchors.fill: parent; anchors.topMargin: 8; anchors.bottomMargin: 8
-                contentHeight: sideCol.implicitHeight; clip: false
-                Column {
-                    id: sideCol; width: parent.width; spacing: 2
-                    Repeater {
-                        model: root.cats
-                        delegate: Rectangle {
-                            required property var modelData
-                            width: sideCol.width - 8; x: 4; height: 40; radius: 10
-                            color: root.current===modelData.key ? Qt.rgba(1,1,1,0.30)
-                                  : sHover.hovered ? Qt.rgba(1,1,1,0.15) : "transparent"
-                            Behavior on color { ColorAnimation { duration: 120 } }
-                            Row {
-                                anchors.left: parent.left; anchors.leftMargin: 10
-                                anchors.verticalCenter: parent.verticalCenter; spacing: 10
-                                Rectangle { width:20; height:20; radius:6; color: modelData.tint; anchors.verticalCenter: parent.verticalCenter
-                                    border.color: Qt.rgba(1,1,1,0.5); border.width:1 }
-                                Text { anchors.verticalCenter: parent.verticalCenter; text: modelData.name
-                                    color: Theme.ink; font.family: Theme.fontFamily; font.pixelSize: 14 }
-                            }
-                            HoverHandler { id: sHover }
-                            MouseArea { anchors.fill: parent; onClicked: root.current = modelData.key }
+                id: sideCol; spacing: 0
+                Repeater {
+                    model: root.cats
+                    delegate: Rectangle {
+                        required property var modelData
+                        width: sideCol.width - 8; x: 4; height: root.sideRowH; radius: 9
+                        color: root.current===modelData.key ? Qt.rgba(1,1,1,0.30)
+                              : sHover.hovered ? Qt.rgba(1,1,1,0.15) : "transparent"
+                        Behavior on color { ColorAnimation { duration: 120 } }
+                        Row {
+                            anchors.left: parent.left; anchors.leftMargin: 10
+                            anchors.verticalCenter: parent.verticalCenter; spacing: 10
+                            Rectangle { width: Math.min(20, root.sideRowH-6); height: width; radius: width*0.3
+                                color: modelData.tint; anchors.verticalCenter: parent.verticalCenter
+                                border.color: Qt.rgba(1,1,1,0.5); border.width:1 }
+                            Text { anchors.verticalCenter: parent.verticalCenter; text: modelData.name
+                                color: Theme.ink; font.family: Theme.fontFamily; font.pixelSize: 13 }
                         }
+                        HoverHandler { id: sHover }
+                        MouseArea { anchors.fill: parent; onClicked: root.current = modelData.key }
                     }
                 }
             }

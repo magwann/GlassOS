@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_AUTOMOC ON)
 
-find_package(Qt6 6.2 REQUIRED COMPONENTS Quick Qml Gui)
+find_package(Qt6 6.2 REQUIRED COMPONENTS Quick Qml Gui WebEngineQuick)
 
 qt_add_executable(glassos-shell
     src/main.cpp
@@ -35,6 +35,7 @@ qt_add_qml_module(glassos-shell
         qml/apps/Photos.qml
         qml/apps/Terminal.qml
         qml/apps/Calculator.qml
+        qml/apps/AppStore.qml
     RESOURCES
         qml/glyphs/files.svg
         qml/glyphs/welcome.svg
@@ -45,6 +46,7 @@ qt_add_qml_module(glassos-shell
         qml/glyphs/photos.svg
         qml/glyphs/terminal.svg
         qml/glyphs/calc.svg
+        qml/glyphs/appstore.svg
         qml/glyphs/wifi.svg
         qml/glyphs/volume.svg
         qml/glyphs/battery.svg
@@ -60,6 +62,7 @@ target_link_libraries(glassos-shell PRIVATE
     Qt6::Quick
     Qt6::Qml
     Qt6::Gui
+    Qt6::WebEngineQuick
 )
 
 install(TARGETS glassos-shell RUNTIME DESTINATION bin)

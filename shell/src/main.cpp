@@ -3,6 +3,7 @@
 // Qt 6.2's qmlcachegen). Theme supports a dark ("night glass") mode.
 
 #include <QGuiApplication>
+#include <QtWebEngineQuick/QtWebEngineQuick>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <QProcess>
@@ -100,6 +101,7 @@ public:
             {"music",    "Music",      "music",    "violet", ""},
             {"photos",   "Photos",     "photos",   "warm",   "eog"},
             {"calc",     "Calculator", "calc",     "aqua",   "gnome-calculator"},
+            {"appstore", "App Store",  "appstore", "leaf",   ""},
         };
     }
     int rowCount(const QModelIndex & = QModelIndex()) const override { return int(m.size()); }
@@ -153,6 +155,11 @@ public:
 };
 
 int main(int argc, char *argv[]) {
+    // QtWebEngine (the built-in Aqua Web browser) needs shared GL contexts and
+    // its own one-time init before the QML engine is created.
+    QCoreApplication::setAttribute(Qt::AA_ShareOpenGLContexts);
+    QtWebEngineQuick::initialize();
+
     QGuiApplication app(argc, argv);
     app.setApplicationName("GlassOS");
     app.setOrganizationName("GlassOS");
